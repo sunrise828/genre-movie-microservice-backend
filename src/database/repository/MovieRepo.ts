@@ -54,4 +54,19 @@ export default class MovieRepo {
     return { Movie: Movie };
   }
   
+  public static findAll(
+    pageNumber: number,
+    limit: number,
+  ): Promise<Movie[]> {
+    return MovieModel.find({})
+      .populate({
+        path: 'genres',
+        select: { name: 1 },
+      })
+      .skip(limit * (pageNumber - 1))
+      .limit(limit)
+      .sort({ updatedAt: -1 })
+      .lean<Movie>()
+      .exec();
+  }
 }

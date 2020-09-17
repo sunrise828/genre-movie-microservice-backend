@@ -1,4 +1,4 @@
-import { model, Schema, Document } from 'mongoose';
+import { model, Schema, Document, Types } from 'mongoose';
 import Genre from './Genre';
 
 export const DOCUMENT_NAME = 'Movie';

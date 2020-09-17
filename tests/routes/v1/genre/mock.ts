@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Genre from '../../../../src/database/model/Genre';
-import { Types } from 'mongoose';
+import { Types, Schema } from 'mongoose';
 
 export const GENRE_NAME = 'abc';
 export const GENRE_DESCRIPTION = 'abc genre description';
