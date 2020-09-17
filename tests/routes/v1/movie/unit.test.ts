@@ -27,3 +27,4 @@ describe('Get all movie route', () => {
     expect(mockMovieFindAll).toBeCalled();
   });
 });
+
