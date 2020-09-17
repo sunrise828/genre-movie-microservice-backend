@@ -15,14 +15,14 @@ describe('Create genre route', () => {
   });
 
   it('Should send error when empty body is sent', async () => {
-    const response:any = request.post(endpoint);
+    const response:any = await request.post(endpoint);
     expect(response.status).toBe(400);
     expect(mockGenreFindById).not.toBeCalled();
     expect(mockGenreCreate).not.toBeCalled();
   });
 
   it('Should send error when name is not sent', async () => {
-    const response:any = request.post(endpoint).send({
+    const response:any = await request.post(endpoint).send({
       description: GENRE_DESCRIPTION
     });
     expect(response.status).toBe(400);
@@ -33,7 +33,7 @@ describe('Create genre route', () => {
   });
 
   it('Should send error when description is not sent', async () => {
-    const response:any = request.post(endpoint).send({
+    const response:any = await request.post(endpoint).send({
       name: GENRE_NAME
     });
     expect(response.status).toBe(400);
@@ -43,8 +43,8 @@ describe('Create genre route', () => {
     expect(mockGenreCreate).not.toBeCalled();
   });
 
-  it('Should send success response for correct data', async () => {
-    const response:any = request.post(endpoint).send({
+  it('Should send success response for correct data', async (done) => {
+    const response:any = await request.post(endpoint).send({
       name: GENRE_NAME,
       description: GENRE_DESCRIPTION,
     });
@@ -57,7 +57,7 @@ describe('Create genre route', () => {
     expect(response.body.data.genre).toHaveProperty('name');
     expect(response.body.data.genre).toHaveProperty('description');
     
-    expect(mockGenreFindById).toBeCalled();
     expect(mockGenreCreate).toBeCalled();
+    done();
   });
 });

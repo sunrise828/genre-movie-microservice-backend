@@ -1,7 +1,6 @@
 import express from 'express';
 import { SuccessResponse } from '../../../core/ApiResponse';
 import GenreRepo from '../../../database/repository/GenreRepo';
-import { ProtectedRequest } from 'app-request';
 import { NoDataError, BadRequestError } from '../../../core/ApiError';
 import { Types } from 'mongoose';
 import validator, { ValidationSource } from '../../../helpers/validator';
@@ -16,7 +15,7 @@ const router = express.Router();
 router.get(
   '/:id',
   validator(schema.withId, ValidationSource.PARAM),
-  asyncHandler(async (req: ProtectedRequest, res) => {
+  asyncHandler(async (req, res) => {
     const genre = await GenreRepo.findById(new Types.ObjectId(req.params.id));
     if (!genre) throw new BadRequestError('Genre not registered');
     return new SuccessResponse('success', _.pick(genre, ['name', 'description'])).send(res);
@@ -27,7 +26,7 @@ router.get(
 router.get(
   '/name',
   validator(schema.withName, ValidationSource.PARAM),
-  asyncHandler(async (req: ProtectedRequest, res) => {
+  asyncHandler(async (req, res) => {
     const genre = await GenreRepo.findByName(req.query.name);
     if (!genre) throw new BadRequestError('Genre not registered');
     return new SuccessResponse('success', _.pick(genre, ['name', 'description'])).send(res);
@@ -37,12 +36,12 @@ router.get(
 // get all items
 router.get(
   '/',
-  asyncHandler(async (req: ProtectedRequest, res) => {
+  asyncHandler(async (req, res) => {
     const genres = await GenreRepo.findAll(
       parseInt(req.query.pageNumber),
       parseInt(req.query.pageItemCount),
     )
-    if (!genres || genres.length < 1) throw new NoDataError();
+    // if (!genres || genres.length < 1) throw new NoDataError();
     return new SuccessResponse('success', genres).send(res);
   }),
 );
@@ -51,20 +50,20 @@ router.get(
 router.post(
   '/',
   validator(schema.withInfo),
-  asyncHandler(async (req: ProtectedRequest, res) => {    
+  asyncHandler(async (req, res) => {    
     const createdGenre = await GenreRepo.create({
       name: req.body.name,
       description: req.body.description
     } as Genre);
 
-    new SuccessResponse('Blog created successfully', createdGenre).send(res);
+    new SuccessResponse('Genre created successfully', createdGenre).send(res);
   }),
 );
 
 router.put(
   '/',
   validator(schema.updateInfo),
-  asyncHandler(async (req: ProtectedRequest, res) => {
+  asyncHandler(async (req, res) => {
     const genre = await GenreRepo.findById(req.body.id);
     if (!genre) throw new BadRequestError('Genre not registered');
 
