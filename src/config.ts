@@ -10,6 +10,7 @@ export const db = {
   password: process.env.DB_USER_PWD,
 };
 
+export const mongoUri = process.env.MONGO_URI;
 export const corsUrl = process.env.CORS_URL;
 
 export const logDirectory = process.env.LOG_DIR;
