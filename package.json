@@ -4,7 +4,7 @@
   "description": "The architecture for nodejs backend application of concept prov. It is build on top of expressjs using typescript.",
   "main": "index.js",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node -r build/server.js",
     "dev": "npm run build && npm run serve",
     "serve": "node -r dotenv/config build/server.js",
     "build": "npm run build-ts",

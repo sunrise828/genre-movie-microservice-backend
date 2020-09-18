@@ -3,8 +3,7 @@ import Logger from '../core/Logger';
 import { db, mongoUri, environment } from '../config';
 
 // Build the connection string
-const dbURI = process.env.MONGO_URI || `mongodb://localhost:27017/${db.name}`;
-console.log(dbURI);
+const dbURI = process.env.MONGO_URI || `mongodb://localhost:27017/mg-db`;
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
