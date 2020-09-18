@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Genre from '../../../../src/database/model/Genre';
 import { Types } from 'mongoose';
 import Movie, { MovieModel } from '../../../../src/database/model/Movie';
+import Genre from '../../../../src/database/model/Genre';
 import { GENRE_ID } from '../genre/mock';
 
 export const MOVIE_NAME = 'abc';
 export const MOVIE_DESCRIPTION = 'abc movie description';
+export const MOVIE_ID = new Types.ObjectId();
 export const OTHER_GENRE_ID = new Types.ObjectId();
 export const MOVIE_LISTS:Movie[] = [
   new MovieModel({
@@ -59,9 +60,20 @@ export const mockMovieFindById = jest.fn(
   },
 );
 
+export const mockMovieFindByName = jest.fn(
+  async (name: String): Promise<Movie> => {
+    if (MOVIE_LISTS[0].name == name)
+      return MOVIE_LISTS[0] as Movie;
+    return null;
+  },
+);
+
 jest.mock('../../../../src/database/repository/MovieRepo', () => ({
   get findById() {
     return mockMovieFindById;
+  },
+  get findByName() {
+    return mockMovieFindByName;
   },
   get create() {
     return mockMovieCreate;

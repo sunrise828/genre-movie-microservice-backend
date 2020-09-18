@@ -7,7 +7,7 @@ export default class MovieRepo {
   // contains critical information of the Movie
   public static findById(id: Types.ObjectId): Promise<Movie> {
     return MovieModel.findOne({ _id: id })
-      .select('+name +description +duration +rate')
+      // .select('+_id +name +description +duration +rate +createdAt +updatedAt')
       .populate({
         path: 'genres'
       })

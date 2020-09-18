@@ -12,6 +12,17 @@ import Movie from '../../../database/model/Movie';
 
 const router = express.Router();
 
+// get item by name
+router.get(
+  '/name',
+  validator(schema.withName, ValidationSource.QUERY),
+  asyncHandler(async (req, res) => {
+    const movie = await MovieRepo.findByName(req.query.name);
+    if (!movie) throw new BadRequestError('Movie not registered');
+    return new SuccessResponse('success', movie as Movie).send(res);
+  }),
+);
+
 // get item by id
 router.get(
   '/:id',
@@ -19,18 +30,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const movie = await MovieRepo.findById(new Types.ObjectId(req.params.id));
     if (!movie) throw new BadRequestError('Movie not registered');
-    return new SuccessResponse('success', _.pick(movie, ['name', 'description'])).send(res);
-  }),
-);
-
-// get item by name
-router.get(
-  '/name',
-  validator(schema.withName, ValidationSource.PARAM),
-  asyncHandler(async (req, res) => {
-    const movie = await MovieRepo.findByName(req.query.name);
-    if (!movie) throw new BadRequestError('Movie not registered');
-    return new SuccessResponse('success', _.pick(movie, ['name', 'description'])).send(res);
+    return new SuccessResponse('success', movie as Movie).send(res);
   }),
 );
 

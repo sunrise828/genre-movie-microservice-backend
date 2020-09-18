@@ -25,7 +25,6 @@ const schema = new Schema(
     description: {
       type: Schema.Types.String,
       required: true,
-      unique: true,
       trim: true,
       select: false,
     },
