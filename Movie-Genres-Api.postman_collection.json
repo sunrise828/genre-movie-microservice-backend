@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "9dbf5254-397b-4392-97c6-7e79e8460aa6",
+		"name": "Movie-Genres-Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Genre",
+			"description": "",
+			"item": [
+				{
+					"name": "List genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre"
+							]
+						},
+						"description": "List all genres with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a genre",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Genre1\",\n\t\"description\": \"Description\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre"
+							]
+						},
+						"description": "Create a genre"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a genre by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre/5f647567f1d3fd269434c3c9",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre",
+								"5f647567f1d3fd269434c3c9"
+							]
+						},
+						"description": "Get a Genre by id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a gnere by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre/name?name=Genre1",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Genre1"
+								}
+							]
+						},
+						"description": "Get a genre by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a genre",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5f647567f1d3fd269434c3c9\",\n\t\"name\": \"Updated Genre2\",\n\t\"description\": \"New Genre2 description\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a genre",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5f647567f1d3fd269434c3c9\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/genre",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"genre"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"description": "",
+			"item": [
+				{
+					"name": "List all movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie?pageNumber=0&pageItemCount=0",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0"
+								},
+								{
+									"key": "pageItemCount",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all movies by a genre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie/search?genres=5f647555f1d3fd269434c3c8,5f647567f1d3fd269434c3c9",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie",
+								"search"
+							],
+							"query": [
+								{
+									"key": "genres",
+									"value": "5f647555f1d3fd269434c3c8,5f647567f1d3fd269434c3c9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Movie1\",\n\t\"description\": \"Movie1 Description\",\n\t\"duration\": 120,\n\t\"rating\": 3,\n\t\"genreName\": \"Genre1\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie"
+							]
+						},
+						"description": "Create a genre"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a movie by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie/5f647ddd8a56e540f471dc35",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie",
+								"5f647ddd8a56e540f471dc35"
+							]
+						},
+						"description": "Get a Genre by id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a movie by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/v1/movie/name?name=Movie1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"movie",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Movie1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a movie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5f647ddd8a56e540f471dc35\",\n\t\"name\": \"Updated Movie3\",\n\t\"description\": \"New Movie3 description\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a movie",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5f647ddd8a56e540f471dc35\"\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}/v1/movie",
+							"host": [
+								"{{hostUrl}}"
+							],
+							"path": [
+								"v1",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

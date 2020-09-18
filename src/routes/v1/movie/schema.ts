@@ -23,4 +23,7 @@ export default {
     rating: Joi.number().optional(),
     genreName: Joi.string().optional(),
   }),
+  withGenre: Joi.object().keys({
+    genres: Joi.string().required()
+  }),
 };

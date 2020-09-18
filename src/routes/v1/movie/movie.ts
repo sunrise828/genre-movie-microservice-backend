@@ -25,12 +25,23 @@ router.get(
 
 // get item by id
 router.get(
-  '/:id',
+  '/id/:id',
   validator(schema.withId, ValidationSource.PARAM),
   asyncHandler(async (req, res) => {
     const movie = await MovieRepo.findById(new Types.ObjectId(req.params.id));
     if (!movie) throw new BadRequestError('Movie not registered');
     return new SuccessResponse('success', movie as Movie).send(res);
+  }),
+);
+
+// get all items
+router.get(
+  '/search',
+  validator(schema.withGenre, ValidationSource.QUERY),
+  asyncHandler(async (req, res) => {
+    const movies = await MovieRepo.findAllByGenres(req.query.genres);
+    // if (!movies || movies.length < 1) throw new NoDataError();
+    return new SuccessResponse('success', movies).send(res);
   }),
 );
 

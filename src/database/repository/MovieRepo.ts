@@ -67,4 +67,17 @@ export default class MovieRepo {
       .lean<Movie>()
       .exec();
   }
+
+  public static findAllByGenres(genres:string): Promise<Movie[]> {
+    const gens = genres.split(',')
+    const genreIds = gens.map(id => Types.ObjectId(id));
+    return MovieModel.find({genres: {$elemMatch: {$in: genreIds}}, status: true})
+      .populate({
+        path: 'genres',
+        select: { name: 1 },
+      })
+      .sort({ updatedAt: -1 })
+      .lean<Movie>()
+      .exec();
+  }
 }
