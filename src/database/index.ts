@@ -3,7 +3,7 @@ import Logger from '../core/Logger';
 import { db, mongoUri, environment } from '../config';
 
 // Build the connection string
-const dbURI = ENV['MONGO_URI'] || `mongodb://localhost:27017/${db.name}`;
+const dbURI = process.env.MONGO_URI || `mongodb://localhost:27017/${db.name}`;
 console.log(dbURI);
 const options = {
   useNewUrlParser: true,
