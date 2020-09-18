@@ -43,13 +43,13 @@ describe('Get a movie by id route', () => {
 
   
   it('Should send error when id is not passed', async () => {
-    const response: any = await request.get(`${endpoint}/${MOVIE_ID}`)
+    const response: any = await request.get(`${endpoint}/id/${MOVIE_ID}`)
     expect(response.status).toBe(400);
     expect(mockMovieFindById).toBeCalled();
   })
 
   it('Should send success when correct id is passed', async () => {
-    const response: any = await request.get(`${endpoint}/${MOVIE_LISTS[0]._id}`)
+    const response: any = await request.get(`${endpoint}/id/${MOVIE_LISTS[0]._id}`)
     expect(response.status).toBe(200);
     expect(response.body.data).toBeDefined();
     expect(response.body.data._id).toEqual(MOVIE_LISTS[0]._id.toString());

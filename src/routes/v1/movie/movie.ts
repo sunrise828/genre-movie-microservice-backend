@@ -53,7 +53,7 @@ router.get(
       parseInt(req.query.pageNumber),
       parseInt(req.query.pageItemCount),
     )
-    // if (!movies || movies.length < 1) throw new NoDataError();
+    if (!movies || movies.length < 1) throw new NoDataError();
     return new SuccessResponse('success', movies).send(res);
   }),
 );
