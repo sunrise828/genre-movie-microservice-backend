@@ -6,6 +6,7 @@ export const COLLECTION_NAME = 'genres';
 export default interface Genre extends Document {
   name: string;
   description?: string;
+  status?: Boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -19,6 +20,11 @@ const schema = new Schema(
     description: {
       type: Schema.Types.String,
       default: true,
+    },
+    status: {
+      type: Boolean,
+      default: true,
+      select: false
     },
     createdAt: {
       type: Date,

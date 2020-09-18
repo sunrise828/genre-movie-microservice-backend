@@ -2,6 +2,7 @@ import Movie, { MovieModel } from '../model/Movie';
 import Genre, { GenreModel } from '../model/Genre';
 import { InternalError } from '../../core/ApiError';
 import { Types } from 'mongoose';
+import GenreRepo from './GenreRepo';
 
 export default class MovieRepo {
   // contains critical information of the Movie
@@ -16,7 +17,7 @@ export default class MovieRepo {
   }
 
   public static findByName(name: string): Promise<Movie> {
-    return MovieModel.findOne({ name: name })
+    return MovieModel.findOne({ name: name, status: true })
       .select('+name +description +duration +rate')
       .populate({
         path: 'genres',
@@ -32,10 +33,7 @@ export default class MovieRepo {
   ): Promise<{ Movie: Movie }> {
     const now = new Date();
 
-    const genre = await GenreModel.findOne({ name: genreName })
-      .select('+name +description')
-      .lean<Genre>()
-      .exec();
+    const genre = await GenreRepo.findByName(genreName);
     if (!genre) throw new InternalError('Role must be defined');
 
     Movie.genres = [genre._id];
@@ -58,7 +56,7 @@ export default class MovieRepo {
     pageNumber: number,
     limit: number,
   ): Promise<Movie[]> {
-    return MovieModel.find({})
+    return MovieModel.find({status: true})
       .populate({
         path: 'genres',
         select: { name: 1 },

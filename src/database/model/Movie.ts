@@ -10,6 +10,7 @@ export default interface Movie extends Document {
   genres: Genre[];
   duration?: number;
   rating?: number;
+  status: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -45,6 +46,10 @@ const schema = new Schema(
     rating: {
       type: Schema.Types.Number,
       default: 0,
+    },
+    status: {
+      type: Boolean,
+      default: true
     },
     createdAt: {
       type: Date,

@@ -21,6 +21,6 @@ export default {
     description: Joi.string().optional().min(1).max(600),
     duration: Joi.number().optional(),
     rating: Joi.number().optional(),
-    genreName: Joi.string().optional().min(1).max(200),
+    genreName: Joi.string().optional(),
   }),
 };

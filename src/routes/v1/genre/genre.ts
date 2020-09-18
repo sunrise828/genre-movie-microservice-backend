@@ -1,5 +1,5 @@
 import express from 'express';
-import { SuccessResponse } from '../../../core/ApiResponse';
+import { SuccessResponse, SuccessMsgResponse } from '../../../core/ApiResponse';
 import GenreRepo from '../../../database/repository/GenreRepo';
 import { NoDataError, BadRequestError } from '../../../core/ApiError';
 import { Types } from 'mongoose';
@@ -13,10 +13,10 @@ const router = express.Router();
 
 // get item by id
 router.get(
-  '/:id',
-  validator(schema.withId, ValidationSource.PARAM),
+  '/name',
+  validator(schema.withName, ValidationSource.QUERY),
   asyncHandler(async (req, res) => {
-    const genre = await GenreRepo.findById(new Types.ObjectId(req.params.id));
+    const genre = await GenreRepo.findByName(req.query.name);
     if (!genre) throw new BadRequestError('Genre not registered');
     return new SuccessResponse('success', _.pick(genre, ['name', 'description'])).send(res);
   }),
@@ -24,10 +24,10 @@ router.get(
 
 // get item by id
 router.get(
-  '/name',
-  validator(schema.withName, ValidationSource.PARAM),
+  '/:id',
+  validator(schema.withId, ValidationSource.PARAM),
   asyncHandler(async (req, res) => {
-    const genre = await GenreRepo.findByName(req.query.name);
+    const genre = await GenreRepo.findById(new Types.ObjectId(req.params.id));
     if (!genre) throw new BadRequestError('Genre not registered');
     return new SuccessResponse('success', _.pick(genre, ['name', 'description'])).send(res);
   }),
@@ -75,6 +75,19 @@ router.put(
       'Genre updated',
       _.pick(genre, ['name', 'description']),
     ).send(res);
+  }),
+);
+
+router.delete(
+  '/',
+  validator(schema.withId),
+  asyncHandler(async (req, res) => {
+    const genre = await GenreRepo.findById(req.body.id);
+    if (!genre) throw new BadRequestError('Genre not registered');
+
+    genre.status = false;
+    await GenreRepo.update(genre);
+    return new SuccessMsgResponse('Genre deleted successfully').send(res);
   }),
 );
 

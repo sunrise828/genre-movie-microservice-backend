@@ -10,7 +10,7 @@ export default class GenreRepo {
     pageNumber: number,
     limit: number,
   ): Promise<Genre[]> {
-    return GenreModel.find({})
+    return GenreModel.find({status: true})
       .skip(limit * (pageNumber - 1))
       .limit(limit)
       .sort({ updatedAt: -1 })
@@ -19,7 +19,7 @@ export default class GenreRepo {
   }
 
   public static findByName(name: string): Promise<Genre> {
-    return GenreModel.findOne({ name: name }).lean<Genre>().exec();
+    return GenreModel.findOne({ name: name, status: true }).lean<Genre>().exec();
   }
 
   public static async create(genre: Genre): Promise<Genre> {

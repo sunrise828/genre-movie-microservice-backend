@@ -1,5 +1,5 @@
 import express from 'express';
-import { SuccessResponse } from '../../../core/ApiResponse';
+import { SuccessResponse, SuccessMsgResponse } from '../../../core/ApiResponse';
 import MovieRepo from '../../../database/repository/MovieRepo';
 import GenreRepo from '../../../database/repository/GenreRepo';
 import { NoDataError, BadRequestError } from '../../../core/ApiError';
@@ -42,7 +42,7 @@ router.get(
       parseInt(req.query.pageNumber),
       parseInt(req.query.pageItemCount),
     )
-    if (!movies || movies.length < 1) throw new NoDataError();
+    // if (!movies || movies.length < 1) throw new NoDataError();
     return new SuccessResponse('success', movies).send(res);
   }),
 );
@@ -89,6 +89,19 @@ router.put(
       'Movie updated',
       movie,
     ).send(res);
+  }),
+);
+
+router.delete(
+  '/',
+  validator(schema.withId),
+  asyncHandler(async (req, res) => {
+    const movie = await MovieRepo.findById(req.body.id);
+    if (!movie) throw new BadRequestError('Movie not registered');
+
+    movie.status = false;
+    await MovieRepo.update(movie);
+    return new SuccessMsgResponse('Movie deleted successfully').send(res);
   }),
 );
 
